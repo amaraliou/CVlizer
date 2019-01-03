@@ -7,3 +7,6 @@ venv/
 
 # Ignore pipfile
 pipfile
+
+# Ignore pycache
+__pycache__/
