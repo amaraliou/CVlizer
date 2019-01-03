@@ -1,2 +1,9 @@
 # Ignore folder named venv
 venv/
+
+# Ignore .vscode
+.vscode/
+.vscode
+
+# Ignore pipfile
+pipfile
