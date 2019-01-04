@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PersonalInfo, Education, Resume, WorkExperience
+from .models import PersonalInfo, Education, Resume, WorkExperience, Project
 
 class PISerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,13 +41,25 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
         )
 
 
+class ProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = (
+            "projectName",
+            "projectDesc",
+            "link",
+            "tools"
+        )
+
 class ResumeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Resume
         fields = (
             "name",
+            "pinfo",
             "edus",
-            "pinfo"
+            "experiences",
+            "projects"
         )
         depth = 1

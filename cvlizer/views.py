@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import PersonalInfo, Education, Resume, WorkExperience
-from .serializers import PISerializer, EducationSerializer, ResumeSerializer, WorkExperienceSerializer
+from .models import PersonalInfo, Education, Resume, WorkExperience, Project
+from .serializers import PISerializer, EducationSerializer, ResumeSerializer, WorkExperienceSerializer, ProjectsSerializer
 
 # Create your views here.
 class PersonalInfoView(generics.ListAPIView):
@@ -19,3 +19,7 @@ class ResumeView(generics.ListAPIView):
 class WorkExperienceView(generics.ListAPIView):
     queryset = WorkExperience.objects.all()
     serializer_class = WorkExperienceSerializer
+
+class ProjectsView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectsSerializer

@@ -10,7 +10,7 @@ class PersonalInfo(models.Model):
     location = models.CharField(max_length = 255)
     link = models.URLField()
 
-    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="pinfo")
+    Resume = models.OneToOneField("Resume", on_delete = models.CASCADE, null = True, related_name="pinfo")
 
     def __str__(self):
         toFormat = "Name: {} {}\nEmail: {}\nPhone: {}\nLocation: {}\nLink: {}"
@@ -49,25 +49,20 @@ class WorkExperience(models.Model):
     def __str__(self):
         toFormat = "Name: {}\nJob Title: {}\nLocation: {}\nStart: {}\nEnd: {}\nResponsibilities: {}"
         return toFormat.format(self.companyName, self.jobTitle, self.companyLocation, self.startDate, self.endDate, self.jobResp)
-'''
-
-class Skills(models.Model):
-
-    def __str__(self):
-        return
 
 
-class Projects(models.Model):
+class Project(models.Model):
 
-    def __str__(self):
-        return
-
-
-class Extracurricular(models.Model):
+    projectName = models.CharField(max_length = 255)
+    projectDesc = models.TextField()
+    link = models.URLField()
+    tools = models.TextField()
+    Resume = models.ForeignKey("Resume", on_delete=models.CASCADE, null = True, related_name="projects")
 
     def __str__(self):
-        return
-'''
+        toFormat = "Name: {}\nDescription: {}\nLink: {}\nTools Used: {}"
+        return toFormat.format(self.projectName, self.projectDesc, self.link, self.tools)
+
 
 class Resume(models.Model):
 
