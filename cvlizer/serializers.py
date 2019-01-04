@@ -47,4 +47,7 @@ class ResumeSerializer(serializers.ModelSerializer):
         model = Resume
         fields = (
             "name",
+            "edus",
+            "pinfo"
         )
+        depth = 1
