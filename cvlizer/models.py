@@ -10,7 +10,7 @@ class PersonalInfo(models.Model):
     location = models.CharField(max_length = 255)
     link = models.URLField()
 
-    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="pinfos")
+    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True)
 
     def __str__(self):
         toFormat = "Name: {} {}\nEmail: {}\nPhone: {}\nLocation: {}\nLink: {}"
@@ -28,18 +28,28 @@ class Education(models.Model):
     endDate = models.CharField(max_length = 50, default = "BRUH")
     #relevantCourses = models.TextField()
 
-    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="edus")
+    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True)
 
     def __str__(self):
         toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}"
         return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate)
 
 
-'''class WorkExperience(models.Model):
+class WorkExperience(models.Model):
+
+    companyName = models.CharField(max_length = 255)
+    jobTitle = models.CharField(max_length = 255)
+    companyLocation = models.CharField(max_length = 255)
+    startDate = models.CharField(max_length = 50)
+    endDate = models.CharField(max_length = 50)
+    jobResp = models.TextField()
+
+    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True)
 
     def __str__(self):
-        return
-
+        toFormat = "Name: {}\nJob Title: {}\nLocation: {}\nStart: {}\nEnd: {}\nResponsibilities: {}"
+        return toFormat.format(self.companyName, self.jobTitle, self.companyLocation, self.startDate, self.endDate, self.jobResp)
+'''
 
 class Skills(models.Model):
 
