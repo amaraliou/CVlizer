@@ -3,12 +3,14 @@ from django.db import models
 # Create your models here.
 class PersonalInfo(models.Model):
 
-    firstName = models.CharField(max_length = 255, null = False)
-    lastName = models.CharField(max_length = 255, null = False)
+    firstName = models.CharField(max_length = 255, default = "BRUH")
+    lastName = models.CharField(max_length = 255, default = "BRUH")
     email = models.EmailField()
     phone = models.CharField(max_length = 15)
     location = models.CharField(max_length = 255)
     link = models.URLField()
+
+    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="pinfos")
 
     def __str__(self):
         toFormat = "Name: {} {}\nEmail: {}\nPhone: {}\nLocation: {}\nLink: {}"
@@ -17,20 +19,23 @@ class PersonalInfo(models.Model):
 
 class Education(models.Model):
 
-    schoolName = models.CharField(max_length = 255, null = False)
-    schoolLocation = models.CharField(max_length = 255, null = False)
-    degree = models.CharField(max_length = 255, null = False)
-    major = models.CharField(max_length = 255, null = False)
-    gpa = models.CharField(max_length = 100)
-    startDate = models.CharField(max_length = 50)
-    endDate = models.CharField(max_length = 50)
+    schoolName = models.CharField(max_length = 255, default = "BRUH")
+    schoolLocation = models.CharField(max_length = 255, default = "BRUH")
+    degree = models.CharField(max_length = 255, default = "BRUH")
+    major = models.CharField(max_length = 255, default = "BRUH")
+    gpa = models.CharField(max_length = 100, default = "BRUH" )
+    startDate = models.CharField(max_length = 50, default = "BRUH")
+    endDate = models.CharField(max_length = 50, default = "BRUH")
     #relevantCourses = models.TextField()
 
+    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="edus")
+
     def __str__(self):
-        return
+        toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}"
+        return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate)
 
 
-class WorkExperience(models.Model):
+'''class WorkExperience(models.Model):
 
     def __str__(self):
         return
@@ -52,9 +57,11 @@ class Extracurricular(models.Model):
 
     def __str__(self):
         return
-
+'''
 
 class Resume(models.Model):
 
+    name = models.CharField(max_length = 100)
+
     def __str__(self):
-        return
+        return self.name
