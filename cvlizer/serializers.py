@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PersonalInfo, Education, Resume, WorkExperience, Project
+from .models import PersonalInfo, Education, User, WorkExperience, Project
 
 class PISerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,7 +10,8 @@ class PISerializer(serializers.ModelSerializer):
             "email",
             "phone",
             "location",
-            "link"
+            "link",
+            "User"
         )
 
 
@@ -24,7 +25,8 @@ class EducationSerializer(serializers.ModelSerializer):
             "major",
             "gpa",
             "startDate",
-            "endDate"
+            "endDate",
+            "User"
         )
 
 
@@ -37,7 +39,8 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
             "companyLocation",
             "startDate",
             "endDate",
-            "jobResp"
+            "jobResp",
+            "User"
         )
 
 
@@ -48,13 +51,14 @@ class ProjectsSerializer(serializers.ModelSerializer):
             "projectName",
             "projectDesc",
             "link",
-            "tools"
+            "tools",
+            "User"
         )
 
-class ResumeSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Resume
+        model = User
         fields = (
             "name",
             "pinfo",

@@ -1,16 +1,17 @@
 from django.db import models
+import uuid
 
 # Create your models here.
 class PersonalInfo(models.Model):
 
-    firstName = models.CharField(max_length = 255, default = "BRUH")
-    lastName = models.CharField(max_length = 255, default = "BRUH")
+    firstName = models.CharField(max_length = 255)
+    lastName = models.CharField(max_length = 255)
     email = models.EmailField()
     phone = models.CharField(max_length = 15)
     location = models.CharField(max_length = 255)
     link = models.URLField()
 
-    Resume = models.OneToOneField("Resume", on_delete = models.CASCADE, null = True, related_name="pinfo")
+    User = models.OneToOneField("User", on_delete = models.CASCADE, null = True, related_name="pinfo")
 
     def __str__(self):
         toFormat = "Name: {} {}\nEmail: {}\nPhone: {}\nLocation: {}\nLink: {}"
@@ -19,16 +20,15 @@ class PersonalInfo(models.Model):
 
 class Education(models.Model):
 
-    schoolName = models.CharField(max_length = 255, default = "BRUH")
-    schoolLocation = models.CharField(max_length = 255, default = "BRUH")
-    degree = models.CharField(max_length = 255, default = "BRUH")
-    major = models.CharField(max_length = 255, default = "BRUH")
-    gpa = models.CharField(max_length = 100, default = "BRUH" )
-    startDate = models.CharField(max_length = 50, default = "BRUH")
-    endDate = models.CharField(max_length = 50, default = "BRUH")
+    schoolName = models.CharField(max_length = 255)
+    schoolLocation = models.CharField(max_length = 255)
+    degree = models.CharField(max_length = 255)
+    major = models.CharField(max_length = 255)
+    gpa = models.CharField(max_length = 100 )
+    startDate = models.CharField(max_length = 50)
+    endDate = models.CharField(max_length = 50)
     #relevantCourses = models.TextField()
-
-    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="edus")
+    User = models.ForeignKey("User", on_delete = models.CASCADE, null = True, related_name="edus")
 
     def __str__(self):
         toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}"
@@ -43,8 +43,7 @@ class WorkExperience(models.Model):
     startDate = models.CharField(max_length = 50)
     endDate = models.CharField(max_length = 50)
     jobResp = models.TextField()
-
-    Resume = models.ForeignKey("Resume", on_delete = models.CASCADE, null = True, related_name="experiences")
+    User = models.ForeignKey("User", on_delete = models.CASCADE, null = True, related_name="experiences")
 
     def __str__(self):
         toFormat = "Name: {}\nJob Title: {}\nLocation: {}\nStart: {}\nEnd: {}\nResponsibilities: {}"
@@ -57,15 +56,15 @@ class Project(models.Model):
     projectDesc = models.TextField()
     link = models.URLField()
     tools = models.TextField()
-    Resume = models.ForeignKey("Resume", on_delete=models.CASCADE, null = True, related_name="projects")
+    User = models.ForeignKey("User", on_delete=models.CASCADE, null = True, related_name="projects")
 
     def __str__(self):
         toFormat = "Name: {}\nDescription: {}\nLink: {}\nTools Used: {}"
         return toFormat.format(self.projectName, self.projectDesc, self.link, self.tools)
 
 
-class Resume(models.Model):
-
+class User(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     name = models.CharField(max_length = 100)
 
     def __str__(self):
