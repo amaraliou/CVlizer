@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import PersonalInfo, Education, User, WorkExperience, Project
-from .serializers import PISerializer, EducationSerializer, UserSerializer, WorkExperienceSerializer, ProjectsSerializer
+from .models import *
+from .serializers import *
+import uuid
 
 #Personal Info views
 class PersonalInfoView(generics.ListAPIView):
@@ -46,11 +47,36 @@ class EducationSingleView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format = None):
-        edu = Education.objects.filter(pk = pk)
-        edu.delete()
+        toDelete = Education.objects.filter(pk = pk)
+        toDelete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #User views
-class UserView(generics.ListAPIView):
+class UsersView(generics.ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserListSerializer
+
+
+class UserSingleView(APIView):
+
+    def get(self, request, uuid_pk, format = None):
+        user = User.objects.filter(pk = uuid_pk)
+        serializer = UserSerializer(user, many = True)
+        return Response(serializer.data)
+    
+    def delete(self, request, uuid_pk, format = None):
+        toDelete = User.objects.filter(pk = uuid_pk)
+        toDelete.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class UserSinglePostView(APIView):
+
+    def post(self, request, format = None):
+        dt = request.data
+        dt['id'] = uuid.uuid4()
+        serializer = UserSerializer(data = dt)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

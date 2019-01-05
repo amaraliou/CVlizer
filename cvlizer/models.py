@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 
-# Create your models here.
+#Personal Info Model with one to one relationship with the User Model
 class PersonalInfo(models.Model):
 
     firstName = models.CharField(max_length = 255)
@@ -18,6 +18,7 @@ class PersonalInfo(models.Model):
         return toFormat.format(self.firstName, self.lastName, self.email, self.phone, self.location, self.link)
 
 
+#Education Model with many to one relationship with the User Model
 class Education(models.Model):
 
     schoolName = models.CharField(max_length = 255)
@@ -35,6 +36,7 @@ class Education(models.Model):
         return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate)
 
 
+#Work Experience Model with many to one relationship with the User Model
 class WorkExperience(models.Model):
 
     companyName = models.CharField(max_length = 255)
@@ -50,6 +52,7 @@ class WorkExperience(models.Model):
         return toFormat.format(self.companyName, self.jobTitle, self.companyLocation, self.startDate, self.endDate, self.jobResp)
 
 
+#Project Model with many to one relationship with the User Model
 class Project(models.Model):
 
     projectName = models.CharField(max_length = 255)
@@ -63,6 +66,7 @@ class Project(models.Model):
         return toFormat.format(self.projectName, self.projectDesc, self.link, self.tools)
 
 
+#User Model, every user can have one Personal Info submodel and several of the others
 class User(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     name = models.CharField(max_length = 100)

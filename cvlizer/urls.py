@@ -7,5 +7,7 @@ urlpatterns = [
     path('user/education/<int:pk>/', EducationSingleView.as_view(), name='education'),
     path('user/workexperience', WorkExperienceView.as_view(), name='work-experience'),
     path('user/project', ProjectsView.as_view(), name='project'),
-    path('user', UserView.as_view(), name='user')
+    path('users', UsersView.as_view(), name='users'),
+    path('user/<uuid:uuid_pk>/', UserSingleView.as_view(), name='single-user'),
+    path('user/', UserSinglePostView.as_view(), name='single-user-post'),
 ]

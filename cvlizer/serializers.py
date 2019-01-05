@@ -1,18 +1,29 @@
 from rest_framework import serializers
 from .models import PersonalInfo, Education, User, WorkExperience, Project
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "name",
+            "pinfo",
+            "edus"
+        )
+        depth = 1
+
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "name",
+        )
+
 class PISerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalInfo
-        fields = (
-            "firstName",
-            "lastName",
-            "email",
-            "phone",
-            "location",
-            "link",
-            "User"
-        )
+        fields = '__all__'
 
 
 class EducationSerializer(serializers.ModelSerializer):
@@ -55,15 +66,5 @@ class ProjectsSerializer(serializers.ModelSerializer):
             "User"
         )
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = (
-            "name",
-            "pinfo",
-            "edus",
-            "experiences",
-            "projects"
-        )
-        depth = 1
+    
+    
