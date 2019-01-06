@@ -50,6 +50,15 @@ class EducationSingleView(APIView):
         toDelete = Education.objects.filter(pk = pk)
         toDelete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, pk, format = None):
+        toUpdate = Education.objects.filter(pk = pk)
+        dt = request.data
+        serializer = EducationSerializer(instance = toUpdate, data = dt)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 #User views
 class UsersView(generics.ListAPIView):
@@ -68,6 +77,17 @@ class UserSingleView(APIView):
         toDelete = User.objects.filter(pk = uuid_pk)
         toDelete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, request, uuid_pk, format = None):
+        toUpdate = User.objects.filter(pk = uuid_pk).first()
+        dt = request.data
+        serializer = UserSerializer(instance = toUpdate, data = dt)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
 
 class UserSinglePostView(APIView):

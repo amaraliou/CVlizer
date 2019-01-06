@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import PersonalInfo, Education, User, WorkExperience, Project
 
+#User serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -20,12 +21,15 @@ class UserListSerializer(serializers.ModelSerializer):
             "name",
         )
 
+
+#Personal Info serializer
 class PISerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalInfo
         fields = '__all__'
 
 
+#Education serializer
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
@@ -41,6 +45,7 @@ class EducationSerializer(serializers.ModelSerializer):
         )
 
 
+#Work Experience serializer
 class WorkExperienceSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkExperience
@@ -55,6 +60,7 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
         )
 
 
+#Projects serializer
 class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
@@ -64,7 +70,4 @@ class ProjectsSerializer(serializers.ModelSerializer):
             "link",
             "tools",
             "User"
-        )
-
-    
-    
+        )  
