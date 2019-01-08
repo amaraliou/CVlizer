@@ -73,3 +73,15 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+
+
+#Skill Model with many to one relationship with the User Model
+class Skill(models.Model):
+
+    skillType = models.CharField(max_length = 255)
+    skillList = models.TextField()
+    User = models.ForeignKey("User", on_delete=models.CASCADE, null = True, related_name="skills")
+
+    def __str__(self):
+        toFormat = "Skill Name: {}\nSkill Details: {}"
+        return toFormat.format(self.skillType, self.skillList)

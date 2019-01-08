@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PersonalInfo, Education, User, WorkExperience, Project
+from .models import *
 
 #User serializers
 class UserSerializer(serializers.ModelSerializer):
@@ -8,7 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "pinfo",
-            "edus"
+            "edus",
+            "experiences",
+            "projects",
+            "skills"
         )
         depth = 1
 
@@ -71,3 +74,14 @@ class ProjectsSerializer(serializers.ModelSerializer):
             "tools",
             "User"
         )  
+
+
+#Skills serializer
+class SkillsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skill
+        fields = (
+            "skillType",
+            "skillList",
+            "User"
+        )
