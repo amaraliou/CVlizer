@@ -72,7 +72,7 @@ class ProjectSingleView(APIView):
         toDelete.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def update(self, request, uuid_pk, pk, format = None):
+    def put(self, request, uuid_pk, pk, format = None):
         toUpdate = Project.objects.filter(pk = pk).first()
         dt = request.data
         dt['User'] = uuid_pk
@@ -117,7 +117,7 @@ class EducationSingleView(APIView):
         toUpdate = Education.objects.filter(pk = pk).first()
         dt = request.data
         dt['User'] = uuid_pk
-        serializer = EducationSerializer(instance = toUpdate, data = dt)
+        serializer = EducationSerializer(instance = toUpdate, data = dt, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_202_ACCEPTED)
@@ -136,6 +136,29 @@ class SkillsListView(APIView):
         dt = request.data
         dt['User'] = uuid_pk
         serializer = SkillsSerializer(data = dt)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SkillSingleView(APIView):
+
+    def get(self, request, uuid_pk, pk, format = None):
+        skillType = Skill.objects.filter(pk = pk)
+        serializer = SkillsSerializer(skillType, many = True)
+        return Response(serializer.data, status = status.HTTP_200_OK)
+    
+    def delete(self, request, uuid_pk, pk, format = None):
+        toDelete = Skill.objects.filter(pk = pk)
+        toDelete.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, uuid_pk, pk, format = None):
+        toUpdate = Skill.objects.filter(pk = pk).first()
+        dt = request.data
+        dt['User'] = uuid_pk
+        serializer = SkillsSerializer(instance = toUpdate, data = dt, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)

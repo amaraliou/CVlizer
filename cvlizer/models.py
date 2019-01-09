@@ -28,12 +28,12 @@ class Education(models.Model):
     gpa = models.CharField(max_length = 100 )
     startDate = models.CharField(max_length = 50)
     endDate = models.CharField(max_length = 50)
-    #relevantCourses = models.TextField()
+    relevantCourses = models.TextField()
     User = models.ForeignKey("User", on_delete = models.CASCADE, null = True, related_name="edus")
 
     def __str__(self):
-        toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}"
-        return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate)
+        toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}\nRelevant Courses: {}"
+        return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate, self.relevantCourses)
 
 
 #Work Experience Model with many to one relationship with the User Model

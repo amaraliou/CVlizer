@@ -44,6 +44,7 @@ class EducationSerializer(serializers.ModelSerializer):
             "gpa",
             "startDate",
             "endDate",
+            "relevantCourses",
             "User"
         )
 
