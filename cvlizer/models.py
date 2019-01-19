@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import ugettext_lazy as textLazy
 import uuid
 
 #Personal Info Model with one to one relationship with the User Model
@@ -74,7 +76,30 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+#Remember to flush the database with python manage.py flush before using this.
+'''class User(AbstractUser):
 
+    username = None
+    email = models.EmailField(textLazy('email address'), unique = True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+
+def UserManager(BaseUserManager):
+
+    use_in_migrations = True
+    def _create_user(self, email, password, **extra_fields):
+        return
+
+    def create_user(self, email, password = None, **extra_fields):
+        return
+
+    def create_superuser(self, email, password, **extra_fields):
+        return
+'''
 #Skill Model with many to one relationship with the User Model
 class Skill(models.Model):
 
