@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import *
+from .models import PersonalInfo, Education, WorkExperience, Project, Skill, User
 from .serializers import *
+#from django.conf import settings, delete User
 import uuid
 
 #Personal Info views

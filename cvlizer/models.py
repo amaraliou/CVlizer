@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import ugettext_lazy as textLazy
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 import uuid
 
 #Personal Info Model with one to one relationship with the User Model
@@ -37,6 +37,21 @@ class Education(models.Model):
         toFormat = "Name: {}\nLocation: {}\nDegree: {}\nMajor: {}\nGPA: {}\nStart: {}\nEnd: {}\nRelevant Courses: {}"
         return toFormat.format(self.schoolName, self.schoolLocation, self.degree, self.major, self.gpa, self.startDate, self.endDate, self.relevantCourses)
 
+'''
+Example in models.py:
+
+class Article(model.Models):
+    title = models.CharField(max_length=40)
+    author = models.ForeignKey(User) #change this
+    content = models.TextField()
+
+Post Edit:
+
+class Article(model.Models):
+    title = models.CharField(max_length=40)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL) #changed
+    content = models.TextField()
+'''
 
 #Work Experience Model with many to one relationship with the User Model
 class WorkExperience(models.Model):
@@ -77,28 +92,54 @@ class User(models.Model):
         return self.name
 
 #Remember to flush the database with python manage.py flush before using this.
-'''class User(AbstractUser):
-
-    username = None
-    email = models.EmailField(textLazy('email address'), unique = True)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+'''
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=25, unique=True)
+    alias = models.CharField(max_length=40)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS ["username", "alias"]
 
-def UserManager(BaseUserManager):
+    def __str__(self):
+        return "@{}".format(self.username)
+    
+    def get_short_name(self):
+        return self.alias
 
-    use_in_migrations = True
-    def _create_user(self, email, password, **extra_fields):
-        return
+    def get_long_name(self):
+        return "{} @{}".format(self.alias, self.username)
 
-    def create_user(self, email, password = None, **extra_fields):
-        return
 
-    def create_superuser(self, email, password, **extra_fields):
-        return
+class UserManager(BaseUserManager):
+
+    def create_user(self, email, username, password, alias=None):
+        if not email:
+            raise ValueError("ENTER AN EMAIL BUDDY")
+        if not username:
+            raise ValueError("I KNOW YOU HAVE A NAME")
+        if not password:
+            raise ValueError("PASSWORD?!?!?!? HELLO??")
+        if not alias:
+            alias = username
+        
+        user = self.model(
+             email = self.normalize_email(email),
+             username = username,
+             alias = alias)
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, username, password, alias=None):
+        user = self.create_user(email, username, password, alias)
+        user.is_staff()
+        user.is_superuser = True
+        user.save()
+        return user
 '''
 #Skill Model with many to one relationship with the User Model
 class Skill(models.Model):

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import *
+from .models import PersonalInfo, Education, WorkExperience, Project, Skill, User
+#from django.conf import settings, delete User
 
 # Register your models here.
 admin.site.register(PersonalInfo)
