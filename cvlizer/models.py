@@ -98,6 +98,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=25, unique=True)
     alias = models.CharField(max_length=40)
     date_joined = models.DateTimeField(default=timezone.now)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
