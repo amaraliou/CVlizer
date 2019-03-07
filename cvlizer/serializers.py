@@ -1,18 +1,18 @@
 from rest_framework import serializers
-from .models import PersonalInfo, Education, WorkExperience, Project, Skill, User
-#from django.conf import settings, delete User
+from .models import PersonalInfo, Education, WorkExperience, Project, Skill
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 #User serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
-            "name",
-            "pinfo",
-            "edus",
-            "experiences",
-            "projects",
-            "skills"
+            "email",
+            "username",
+            "alias",
+            "date_joined",
+            "is_staff",
         )
         depth = 1
 
@@ -42,10 +42,12 @@ class UserSignUpForm(UserCreationForm):
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
-            "id",
-            "name",
+            "username",
+            "email",
+            "alias",
+            "is_staff",
         )
 
 

@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cvlizer',
+        'USER': 'aliou',
+        'PASSWORD': 'jumpman23',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -122,4 +126,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #User Substitution
-#AUTH_USER_MODEL = 'cvlizer.User'
+AUTH_USER_MODEL = 'cvlizer.User'
